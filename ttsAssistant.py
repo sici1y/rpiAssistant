@@ -2,6 +2,9 @@
 import requests
 from gtts import gTTS
 import os
+from pygame import mixer
+os.environ['SDL_AUDIODRIVER'] = 'alsa'
+import time
 
 # CITY
 city = "Siloam Springs"
@@ -35,4 +38,8 @@ myobj = gTTS(text=weatherTTS, lang=language, slow=False)
 # SAVE MP3
 myobj.save("weather.mp3")
 # PLAY MP3
-os.system("mpg321 weather.mp3")
+mixer.init()
+mixer.music.load("weather.mp3")
+mixer.music.play()
+while mixer.music.get_busy():  # wait for music to finish playing
+    time.sleep(1)
